@@ -22,7 +22,9 @@ public class Book {
 
     private Integer noOfPages;
 
-    private String authorName;
+    private boolean isIssued;
+    //let us assume each book has only 1 copy
+
 
     @Enumerated(value = EnumType.STRING)
     private Genre genre;

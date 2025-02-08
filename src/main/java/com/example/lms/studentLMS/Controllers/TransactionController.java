@@ -19,13 +19,13 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PutMapping("issueBook")
-    public ResponseEntity issueBook(@RequestParam("cardId") Integer cardId,
+    public ResponseEntity<?> issueBook(@RequestParam("cardId") Integer cardId,
                                     @RequestParam("bookId") Integer bookId){
         try {
             String result = transactionService.issueBook(cardId, bookId);
-            return new ResponseEntity(result, HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
     }

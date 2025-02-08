@@ -28,11 +28,13 @@ public class BookService {
         if(optionalBook.isEmpty()){
             throw new Exception("Entered book Id is invalid");
         }
+        //first we are checking if the book that is required is existing or not
 
         Optional<Author> optionalAuthor = authorRepository.findById(authorId);
         if(optionalAuthor.isEmpty()){
             throw new Exception("Entered author id is invalid");
         }
+        //now we are checking if the author is existing or not
 
         Book book = optionalBook.get();
         Author author = optionalAuthor.get();
@@ -40,6 +42,7 @@ public class BookService {
         book.setAuthor(author);
         author.setNoOfBooks(author.getNoOfBooks()+1);
 
+        //hence we updated the book and author filed values make sure to save them both.
         bookRepository.save(book);
         authorRepository.save(author);
 

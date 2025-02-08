@@ -23,7 +23,7 @@ public class LibraryCard {
     @Enumerated(value = EnumType.STRING)
     private CardStatus cardStatus;
 
-
+    /**/
     //Now we are adding the FK to here to the child table
     //This has to be written in the child class
 

@@ -39,7 +39,4 @@ public class Transactions {
     @JoinColumn
     @ManyToOne
     private Book book;
-
-
-
 }

@@ -7,11 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("book")
+@RestController // this annotation represents that the current class is an API class
+@RequestMapping("book") //this is the basic path where all the endpoints in this class will start from here.
 
 public class BookController {
-    @Autowired
+    @Autowired //create beans for the book service
     private BookService bookService;
 
     @PostMapping("add")

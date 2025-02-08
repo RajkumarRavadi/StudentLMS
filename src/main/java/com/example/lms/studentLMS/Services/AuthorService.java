@@ -7,25 +7,44 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Service class for handling business logic related to authors.
+ */
 @Service
-
-
 public class AuthorService {
-    @Autowired
-    private AuthorRepository authorRepository;
 
-    public String addAuthor(Author author){
-        author = authorRepository.save(author);
-        return "Author has been save to the DB " + author.getAuthorId();
+    private final AuthorRepository authorRepository;
+
+    // Constructor-based dependency injection (recommended over field injection)
+    @Autowired
+    public AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
     }
 
-    public Author findAuthorById(Integer authorId) throws Exception{
-        Optional<Author> optionalAuthor = authorRepository.findById(authorId);
+    /**
+     * Adds a new author to the database.
+     * @param author The author object to be saved.
+     * @return A success message with the author ID.
+     */
+    public String addAuthor(Author author) {
+        author = authorRepository.save(author); // Saves the author to the database
+        return "Author has been saved to the DB with ID: " + author.getAuthorId();
+    }
 
-        if(optionalAuthor.isEmpty()){
-            throw new Exception("Invalid author Id");
+    /**
+     * Finds an author by their ID.
+     * @param authorId The ID of the author to find.
+     * @return The Author object if found.
+     * @throws Exception if the author ID is invalid.
+     */
+    public Author findAuthorById(Integer authorId) throws Exception {
+        Optional<Author> optionalAuthor = authorRepository.findById(authorId); // Fetch author by ID
+
+        // Check if author exists
+        if (optionalAuthor.isEmpty()) {
+            throw new Exception("Invalid author ID: " + authorId);
         }
 
-        return optionalAuthor.get();
+        return optionalAuthor.get(); // Return the found author
     }
 }

@@ -1,6 +1,8 @@
 package com.example.lms.studentLMS.Controllers;
 import com.example.lms.studentLMS.Services.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +18,14 @@ public class CardController {
     }
 
     @PutMapping("associateCardAndStudent")
-    public String associateCardAndStudent(@RequestParam("cardId")Integer cardId,
-                                          @RequestParam("studentId") Integer studentId){
-        return cardService.associateCardAndStudent(cardId,studentId);
+    public ResponseEntity associateCardAndStudent(@RequestParam("cardId")Integer cardId,
+                                          @RequestParam("studentId") Integer studentId) {
+          try{
+              String response = cardService.associateCardAndStudent(cardId, studentId);
+              return new ResponseEntity(response, HttpStatus.OK);
+          }catch(Exception e){
+              return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
+
 }

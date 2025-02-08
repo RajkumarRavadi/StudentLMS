@@ -18,6 +18,8 @@ public class StudentController {
         return result;
     }
 
+    //this helps us to return the list of all the students
+    //if there are no student then it will return the empty list
     @GetMapping("/findAll")
     public List<Student> findAllStudents(){
         List<Student> ansList = studentService.findAllStudents();

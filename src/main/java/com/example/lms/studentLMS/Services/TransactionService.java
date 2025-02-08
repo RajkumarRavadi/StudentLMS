@@ -10,6 +10,7 @@ import com.example.lms.studentLMS.Repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 
 
 @Service
@@ -26,15 +27,18 @@ public class TransactionService {
     public String issueBook(int cardId, int bookId)throws Exception {
 
         //get book entity from bookId
-        Book book = bookRepository.findById(bookId).get();
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
+        if(optionalBook.isEmpty()){
+            throw new Exception("Invalid book id: " + bookId + "not exists");
+        }
 
-        //get card entity from cardId
-        LibraryCard card = cardRepository.findById(cardId).get();
+        Optional<LibraryCard> optionalLibraryCard = cardRepository.findById(cardId);
+        if(optionalLibraryCard.isEmpty()){
+            throw new Exception("The card with cardId : "+cardId+ " not exits");
+        }
 
-
-        //create a tnx entity
-        Transactions transaction = new Transactions();
-
+        Book book = optionalBook.get();
+        LibraryCard card = optionalLibraryCard.get();
 
         //FAILURE: If the book is already issued
         if(book.isIssued()){
@@ -45,6 +49,9 @@ public class TransactionService {
         if(card.getNoOfBooksIssued()==3){
             throw new Exception("Card has reached it's limit to take books");
         }
+
+        //create a tnx entity
+        Transactions transaction = new Transactions();
 
         //SUCCESS
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
